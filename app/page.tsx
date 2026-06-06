@@ -1,12 +1,8 @@
 import Link from 'next/link';
-import { ProductCard } from './components/ProductCard';
 import { WhyMatcha } from './components/WhyMatcha';
 import { ReviewsSection } from './components/ReviewsSection';
 import { FranchiseCTA } from './components/FranchiseCTA';
 import { MatchaLeafWatermark } from './components/MatchaLeafWatermark';
-import { PRODUCTS } from './lib/products';
-import { STORES } from './lib/stores';
-import { StoreCard } from './components/StoreCard';
 
 const TRUST_BADGES = [
   { icon: '→', label: 'Nationwide Delivery', detail: 'R89 anywhere in SA' },
@@ -19,9 +15,6 @@ const GALLERY_COLORS = [
   '#1F3324', '#6F8F4E', '#C6A15B', '#2d5a2d', '#4a7a3a', '#8FAF6A',
 ] as const;
 
-const FEATURED_STORE_IDS = ['kloof-street', 'canal-walk', 'rondebosch'];
-const featuredStores = STORES.filter((s) => FEATURED_STORE_IDS.includes(s.id));
-
 export default function HomePage() {
   return (
     <main>
@@ -29,7 +22,6 @@ export default function HomePage() {
       <section className="relative min-h-[90vh] overflow-hidden bg-matcha-dark">
         <MatchaLeafWatermark />
 
-        {/* subtle grid overlay */}
         <div
           aria-hidden="true"
           className="absolute inset-0 opacity-5"
@@ -41,7 +33,6 @@ export default function HomePage() {
         />
 
         <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 py-24 lg:flex-row lg:gap-16">
-          {/* Left — copy */}
           <div className="max-w-xl text-center lg:text-left">
             <p className="text-sm font-medium uppercase tracking-[0.35em] text-gold">
               Premium Ceremonial Grade
@@ -70,7 +61,6 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right — hero image placeholder */}
           <div className="mt-12 w-full max-w-sm shrink-0 lg:mt-0">
             <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl bg-matcha-mid/30">
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
@@ -84,7 +74,6 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Bottom scroll indicator */}
         <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5">
           <div className="h-8 w-px bg-cream/20" />
           <span className="text-xs text-cream/40">Scroll</span>
@@ -106,81 +95,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── Popular Products ── */}
-      <section aria-labelledby="products-heading" className="px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">Our Range</p>
-              <h2
-                id="products-heading"
-                className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark sm:text-5xl"
-              >
-                Popular Products
-              </h2>
-            </div>
-            <Link
-              href="/products"
-              className="hidden shrink-0 text-sm font-medium text-matcha-mid underline-offset-4 hover:underline sm:block"
-            >
-              See all products →
-            </Link>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-            {PRODUCTS.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          <div className="mt-6 text-center sm:hidden">
-            <Link href="/products" className="text-sm font-medium text-matcha-mid underline-offset-4 hover:underline">
-              See all products →
-            </Link>
-          </div>
-        </div>
-      </section>
-
       {/* ── Why Matcha ── */}
       <WhyMatcha />
-
-      {/* ── Featured Stores preview ── */}
-      <section aria-labelledby="stores-preview-heading" className="px-6 py-20 sm:py-28">
-        <div className="mx-auto max-w-7xl">
-          <div className="flex items-end justify-between gap-6">
-            <div>
-              <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">Visit Us</p>
-              <h2
-                id="stores-preview-heading"
-                className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark sm:text-5xl"
-              >
-                Find a Store Near You
-              </h2>
-            </div>
-            <Link
-              href="/stores"
-              className="hidden shrink-0 text-sm font-medium text-matcha-mid underline-offset-4 hover:underline sm:block"
-            >
-              All 12 locations →
-            </Link>
-          </div>
-
-          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
-            {featuredStores.map((store) => (
-              <StoreCard key={store.id} store={store} />
-            ))}
-          </div>
-
-          <div className="mt-8 text-center">
-            <Link
-              href="/stores"
-              className="inline-flex items-center gap-2 rounded-full border border-matcha-dark px-6 py-3 text-sm font-semibold text-matcha-dark transition-colors hover:bg-matcha-dark hover:text-cream"
-            >
-              View All 12 Locations →
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* ── Lifestyle Gallery ── */}
       <section aria-labelledby="gallery-heading" className="bg-cream px-6 py-20">
