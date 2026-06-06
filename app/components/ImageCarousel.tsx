@@ -48,7 +48,7 @@ export function ImageCarousel({ images, label }: ImageCarouselProps) {
       onKeyDown={handleKeyDown}
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
-      className="relative h-44 overflow-hidden rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-[#8FAF6A] focus-visible:ring-offset-2"
+      className="relative h-44 overflow-hidden rounded-xl outline-none focus-visible:ring-2 focus-visible:ring-matcha-mid focus-visible:ring-offset-2"
     >
       <div
         className="flex h-full transition-transform duration-500 ease-out"
@@ -61,7 +61,7 @@ export function ImageCarousel({ images, label }: ImageCarouselProps) {
             className="flex h-full w-full shrink-0 items-center justify-center"
             style={{ backgroundColor: color }}
           >
-            <span className="font-[family-name:var(--font-display)] text-sm tracking-wide text-[#F9F5EE]/80">
+            <span className="font-[family-name:var(--font-display)] text-sm tracking-wide text-cream/80">
               {label} — photo {index + 1}
             </span>
           </div>
@@ -72,7 +72,7 @@ export function ImageCarousel({ images, label }: ImageCarouselProps) {
         type="button"
         onClick={() => goTo(activeIndex - 1)}
         aria-label={`Previous photo of ${label}`}
-        className="absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#1A1A1A]/30 text-lg text-[#F9F5EE] backdrop-blur-sm transition-colors hover:bg-[#1A1A1A]/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9F5EE]"
+        className="absolute left-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/30 text-lg text-cream backdrop-blur-sm transition-colors hover:bg-charcoal/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream"
       >
         ‹
       </button>
@@ -80,7 +80,7 @@ export function ImageCarousel({ images, label }: ImageCarouselProps) {
         type="button"
         onClick={() => goTo(activeIndex + 1)}
         aria-label={`Next photo of ${label}`}
-        className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-[#1A1A1A]/30 text-lg text-[#F9F5EE] backdrop-blur-sm transition-colors hover:bg-[#1A1A1A]/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#F9F5EE]"
+        className="absolute right-2 top-1/2 flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-charcoal/30 text-lg text-cream backdrop-blur-sm transition-colors hover:bg-charcoal/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-cream"
       >
         ›
       </button>
@@ -94,7 +94,7 @@ export function ImageCarousel({ images, label }: ImageCarouselProps) {
             aria-current={index === activeIndex}
             onClick={() => goTo(index)}
             className={`h-1.5 rounded-full transition-all ${
-              index === activeIndex ? 'w-5 bg-[#F9F5EE]' : 'w-1.5 bg-[#F9F5EE]/50'
+              index === activeIndex ? 'w-5 bg-cream' : 'w-1.5 bg-cream/50'
             }`}
           />
         ))}

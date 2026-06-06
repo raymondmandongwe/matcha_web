@@ -10,7 +10,7 @@ const EVENTS = [
     time: '10:00 – 12:00',
     location: 'Kloof Street, Cape Town',
     description: 'Learn the traditional Japanese tea ceremony, explore our full product range, and leave with a sample kit.',
-    color: '#1F3324',
+    color: '#7B1D3C',
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const EVENTS = [
     time: '09:00 – 15:00',
     location: 'Mojo Market, Sea Point',
     description: 'Find us at Sea Point\'s Mojo Market with exclusive market-only pricing and seasonal matcha drinks.',
-    color: '#6F8F4E',
+    color: '#C94D6D',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const EVENTS = [
     time: '07:00 – 09:00',
     location: 'Neelsie, Stellenbosch University',
     description: 'Morning matcha sessions for students and staff. Free tasters for first-timers.',
-    color: '#C6A15B',
+    color: '#4A7C59',
   },
 ] as const;
 
@@ -115,7 +115,7 @@ export default function EventsPage() {
           </p>
           <div className="mt-10 grid grid-cols-1 gap-px bg-cream/10 sm:grid-cols-2 lg:grid-cols-4">
             {PARTNERS.map((partner) => (
-              <div key={partner.name} className="bg-matcha-dark p-8 transition-colors hover:bg-[#2a4f2a]">
+              <div key={partner.name} className="bg-matcha-dark p-8 transition-colors hover:bg-[#9B2E52]">
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gold/70">{partner.category}</p>
                 <h3 className="mt-2 font-[family-name:var(--font-display)] text-xl font-semibold text-cream">
                   {partner.name}
@@ -139,7 +139,7 @@ export default function EventsPage() {
           </p>
           <Link
             href="/contact"
-            className="mt-8 inline-flex items-center gap-2 rounded-full bg-matcha-dark px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#162519]"
+            className="mt-8 inline-flex items-center gap-2 rounded-full bg-matcha-dark px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#5E1530]"
           >
             Get in Touch →
           </Link>

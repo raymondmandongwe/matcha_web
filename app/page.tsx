@@ -12,7 +12,7 @@ const TRUST_BADGES = [
 ] as const;
 
 const GALLERY_COLORS = [
-  '#1F3324', '#6F8F4E', '#C6A15B', '#2d5a2d', '#4a7a3a', '#8FAF6A',
+  '#7B1D3C', '#C94D6D', '#4A7C59', '#F4A7B9', '#9B2E52', '#4A7C59',
 ] as const;
 
 export default function HomePage() {
@@ -40,7 +40,7 @@ export default function HomePage() {
             <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
               <Link
                 href="/products"
-                className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#b8913f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#3A6347] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
                 Shop Products
               </Link>

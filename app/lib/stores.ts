@@ -18,7 +18,7 @@ export interface Store {
 }
 
 const STORE_EMAIL = 'info@love-matcha.co.za';
-const PLACEHOLDER_PALETTE = ['#2D5016', '#8FAF6A', '#C9A66B', '#6B8E4E', '#1A1A1A'] as const;
+const PLACEHOLDER_PALETTE = ['#7B1D3C', '#C94D6D', '#4A7C59', '#F4A7B9', '#9B2E52'] as const;
 
 function placeholderImages(seed: number): readonly string[] {
   return [0, 1, 2].map((offset) => PLACEHOLDER_PALETTE[(seed + offset) % PLACEHOLDER_PALETTE.length]);

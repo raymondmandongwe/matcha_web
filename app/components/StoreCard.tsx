@@ -34,7 +34,7 @@ export function StoreCard({ store }: { store: Store }) {
           <span
             aria-label={openStatus ? 'Currently open' : 'Currently closed'}
             className={`absolute right-2 top-2 rounded-full px-2.5 py-1 text-xs font-semibold ${
-              openStatus ? 'bg-matcha-mid text-white' : 'bg-charcoal/70 text-white'
+              openStatus ? 'bg-gold text-white' : 'bg-charcoal/70 text-white'
             }`}
           >
             {openStatus ? 'Open Now' : 'Closed'}
@@ -90,7 +90,7 @@ export function StoreCard({ store }: { store: Store }) {
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Get directions to ${store.name} on Google Maps`}
-        className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-matcha-dark px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-[#162519] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid"
+        className="mt-5 inline-flex items-center justify-center gap-2 rounded-full bg-matcha-dark px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-[#5E1530] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid"
       >
         Get Directions
         <span aria-hidden="true">→</span>

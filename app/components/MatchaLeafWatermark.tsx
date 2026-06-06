@@ -4,14 +4,14 @@ export function MatchaLeafWatermark() {
       aria-hidden="true"
       focusable="false"
       viewBox="0 0 400 400"
-      className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-[#2D5016]/10 sm:h-96 sm:w-96"
+      className="pointer-events-none absolute -right-16 -top-16 h-72 w-72 text-matcha-dark/10 sm:h-96 sm:w-96"
     >
       <path
         fill="currentColor"
         d="M200 20c88 0 160 80 160 180S288 380 200 380 40 300 40 200c0-30 80-180 160-180Z"
       />
       <path
-        stroke="#F9F5EE"
+        stroke="#FFF8FA"
         strokeOpacity="0.5"
         strokeWidth="3"
         fill="none"

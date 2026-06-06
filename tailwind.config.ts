@@ -5,10 +5,10 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        matcha: { dark: '#1F3324', mid: '#6F8F4E', light: '#A8C480' },
-        gold: '#C6A15B',
-        cream: '#F7F2E8',
-        card: '#FFFAF0',
+        matcha: { dark: '#7B1D3C', mid: '#C94D6D', light: '#F4A7B9' },
+        gold: '#4A7C59',   // green highlight
+        cream: '#FEF0F4',  // blush background
+        card: '#FFF8FA',   // soft pink-white cards
         charcoal: '#1A1A1A',
       },
       animation: {

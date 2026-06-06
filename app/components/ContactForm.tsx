@@ -333,7 +333,7 @@ export function ContactForm() {
             type="submit"
             disabled={isSending}
             aria-busy={isSending}
-            className="w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#162519] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#5E1530] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSending ? (
               <span className="flex items-center justify-center gap-2">
