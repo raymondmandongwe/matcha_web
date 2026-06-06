@@ -8,12 +8,14 @@ const LANDING_LINKS = [
 
 export default function HomePage() {
   return (
-    <main className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-10 overflow-hidden px-6 py-20 text-center">
+    <main className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-10 overflow-hidden bg-[url('/matcha_web/matcha-home-poster.jpg')] bg-cover bg-center px-6 py-20 text-center">
       <video
-        className="absolute inset-0 -z-20 h-full w-full object-cover"
+        className="absolute inset-0 -z-20 h-full w-full object-cover motion-reduce:hidden"
         autoPlay
         loop
         muted
+        poster="/matcha_web/matcha-home-poster.jpg"
+        preload="metadata"
         playsInline
         aria-hidden="true"
       >
