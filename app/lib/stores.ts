@@ -1,3 +1,5 @@
+export type StoreArea = 'Cape Town' | 'Johannesburg' | 'Durban' | 'Stellenbosch' | 'Somerset West';
+
 export interface OperatingHours {
   days: string;
   hours: string;
@@ -9,20 +11,21 @@ export interface Store {
   email: string;
   address?: string;
   phone?: string;
+  area: StoreArea;
   mapsQuery: string;
   hours: OperatingHours[];
   images: readonly string[];
 }
 
 const STORE_EMAIL = 'info@love-matcha.co.za';
-
 const PLACEHOLDER_PALETTE = ['#2D5016', '#8FAF6A', '#C9A66B', '#6B8E4E', '#1A1A1A'] as const;
 
 function placeholderImages(seed: number): readonly string[] {
   return [0, 1, 2].map((offset) => PLACEHOLDER_PALETTE[(seed + offset) % PLACEHOLDER_PALETTE.length]);
 }
 
-export const mapsUrl = (query: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
+export const mapsUrl = (query: string) =>
+  `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`;
 
 export const STORES: Store[] = [
   {
@@ -30,7 +33,8 @@ export const STORES: Store[] = [
     name: 'Bloubergstrand',
     email: STORE_EMAIL,
     address: 'Shop 6, 12 Marine Cir, Table View, Cape Town, 7441',
-    mapsQuery: 'Love Matcha, Shop 6, 12 Marine Cir, Table View, Cape Town, 7441',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, Shop 6, 12 Marine Cir, Table View, Cape Town',
     hours: [
       { days: 'Mon – Thu', hours: '09:00 – 22:00' },
       { days: 'Fri – Sat', hours: '09:00 – 23:00' },
@@ -43,7 +47,8 @@ export const STORES: Store[] = [
     name: 'Fourways JHB',
     email: STORE_EMAIL,
     address: '11 Ruby Cl, Witkoppen, Sandton, 2068',
-    mapsQuery: 'Love Matcha, 11 Ruby Cl, Witkoppen, Sandton, 2068',
+    area: 'Johannesburg',
+    mapsQuery: 'Love Matcha, 11 Ruby Cl, Witkoppen, Sandton',
     hours: [
       { days: 'Mon – Sat', hours: '09:00 – 20:00' },
       { days: 'Sun', hours: '09:00 – 19:00' },
@@ -55,7 +60,8 @@ export const STORES: Store[] = [
     name: 'Gateway Durban',
     email: STORE_EMAIL,
     address: '1 Palm Blvd, Umhlanga Ridge, Durban, 4319',
-    mapsQuery: 'Love Matcha, 1 Palm Blvd, Umhlanga Ridge, Durban, 4319',
+    area: 'Durban',
+    mapsQuery: 'Love Matcha, 1 Palm Blvd, Umhlanga Ridge, Durban',
     hours: [{ days: 'Daily', hours: '09:00 – 20:00' }],
     images: placeholderImages(2),
   },
@@ -64,7 +70,8 @@ export const STORES: Store[] = [
     name: 'Canal Walk',
     email: STORE_EMAIL,
     address: '490 Century Blvd, Century City, Cape Town, 7446',
-    mapsQuery: 'Love Matcha, 490 Century Blvd, Century City, Cape Town, 7446',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, 490 Century Blvd, Century City, Cape Town',
     hours: [{ days: 'Daily', hours: '09:00 – 21:00' }],
     images: placeholderImages(3),
   },
@@ -72,6 +79,7 @@ export const STORES: Store[] = [
     id: 'tygervalley-mall',
     name: 'Tygervalley Mall',
     email: STORE_EMAIL,
+    area: 'Cape Town',
     mapsQuery: 'Love Matcha, Tygervalley Mall, Cape Town',
     hours: [
       { days: 'Mon – Sat', hours: '09:00 – 19:00' },
@@ -84,6 +92,7 @@ export const STORES: Store[] = [
     name: 'Sandown',
     email: STORE_EMAIL,
     address: 'Retail Crossing Shopping Mall, Sandown',
+    area: 'Johannesburg',
     mapsQuery: 'Love Matcha, Retail Crossing Shopping Mall, Sandown',
     hours: [
       { days: 'Mon – Fri', hours: '08:00 – 20:00' },
@@ -96,7 +105,8 @@ export const STORES: Store[] = [
     id: 'neelsie',
     name: 'Neelsie (Stellenbosch University)',
     email: STORE_EMAIL,
-    address: 'Neelsie Student Centre, Stellenbosch University, Stellenbosch',
+    address: 'Neelsie Student Centre, Stellenbosch University',
+    area: 'Stellenbosch',
     mapsQuery: 'Love Matcha, Neelsie Student Centre, Stellenbosch University',
     hours: [
       { days: 'Mon – Fri', hours: '07:00 – 16:30' },
@@ -109,7 +119,8 @@ export const STORES: Store[] = [
     name: 'Kloof Street',
     email: STORE_EMAIL,
     address: '50 Kloof St, Gardens, Cape Town, 8001',
-    mapsQuery: 'Love Matcha, 50 Kloof St, Gardens, Cape Town, 8001',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, 50 Kloof St, Gardens, Cape Town',
     hours: [
       { days: 'Mon – Thu', hours: '08:30 – 21:00' },
       { days: 'Fri – Sat', hours: '08:30 – 22:00' },
@@ -122,7 +133,8 @@ export const STORES: Store[] = [
     name: 'Mojo Market',
     email: STORE_EMAIL,
     address: '30 Regent Rd, Sea Point, Cape Town, 8060',
-    mapsQuery: 'Love Matcha, Mojo Market, 30 Regent Rd, Sea Point, Cape Town, 8060',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, Mojo Market, 30 Regent Rd, Sea Point, Cape Town',
     hours: [
       { days: 'Mon – Thu', hours: '10:00 – 22:00' },
       { days: 'Fri – Sat', hours: '08:00 – 23:00' },
@@ -135,6 +147,7 @@ export const STORES: Store[] = [
     name: 'Somerset West',
     email: STORE_EMAIL,
     address: '1 Bright St, Somerset West',
+    area: 'Somerset West',
     mapsQuery: 'Love Matcha, 1 Bright St, Somerset West',
     hours: [
       { days: 'Mon – Thu', hours: '08:00 – 18:00' },
@@ -149,7 +162,8 @@ export const STORES: Store[] = [
     email: STORE_EMAIL,
     address: '18 Main Road, Rondebosch, Cape Town, 7700',
     phone: '+27 72 565 5958',
-    mapsQuery: 'Love Matcha, 18 Main Road, Rondebosch, Cape Town, 7700',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, 18 Main Road, Rondebosch, Cape Town',
     hours: [{ days: 'Daily', hours: '09:00 – 21:00' }],
     images: placeholderImages(0),
   },
@@ -158,7 +172,8 @@ export const STORES: Store[] = [
     name: 'Table Bay Mall',
     email: STORE_EMAIL,
     address: 'R27 & Boulevard, Cape Town, 7741',
-    mapsQuery: 'Love Matcha, Table Bay Mall, R27 & Boulevard, Cape Town, 7741',
+    area: 'Cape Town',
+    mapsQuery: 'Love Matcha, Table Bay Mall, R27 & Boulevard, Cape Town',
     hours: [
       { days: 'Mon – Sat', hours: '09:00 – 20:00' },
       { days: 'Sun', hours: '09:00 – 18:00' },

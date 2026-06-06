@@ -1,38 +1,230 @@
 import Link from 'next/link';
+import { ProductCard } from './components/ProductCard';
+import { WhyMatcha } from './components/WhyMatcha';
+import { ReviewsSection } from './components/ReviewsSection';
+import { FranchiseCTA } from './components/FranchiseCTA';
+import { MatchaLeafWatermark } from './components/MatchaLeafWatermark';
+import { PRODUCTS } from './lib/products';
+import { STORES } from './lib/stores';
+import { StoreCard } from './components/StoreCard';
 
-const LANDING_LINKS = [
-  { href: '/stores', label: 'Find a Store', description: 'Browse all eleven Love Matcha locations and get directions.' },
-  { href: '/contact', label: 'Get in Touch', description: 'Send us a message — questions, feedback, or enquiries.' },
-  { href: '/suppliers', label: 'Our Partners', description: 'Meet the manufacturing partners behind every batch.' },
+const TRUST_BADGES = [
+  { icon: '→', label: 'Nationwide Delivery', detail: 'R89 anywhere in SA' },
+  { icon: '◈', label: 'Tracked & Secure', detail: 'Real-time tracking' },
+  { icon: '◉', label: 'Store Pickup', detail: '12 locations' },
+  { icon: '◎', label: 'WhatsApp Support', detail: 'Reply in under 1 hr' },
 ] as const;
+
+const GALLERY_COLORS = [
+  '#1F3324', '#6F8F4E', '#C6A15B', '#2d5a2d', '#4a7a3a', '#8FAF6A',
+] as const;
+
+const FEATURED_STORE_IDS = ['kloof-street', 'canal-walk', 'rondebosch'];
+const featuredStores = STORES.filter((s) => FEATURED_STORE_IDS.includes(s.id));
 
 export default function HomePage() {
   return (
-    <main className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-10 bg-[url('/matcha_web/matcha-home-bg.png')] bg-cover bg-center px-6 py-20 text-center">
-      <div className="absolute inset-0 -z-10 bg-white/25" aria-hidden="true" />
-      <div className="rounded-[8px] bg-white/70 px-6 py-5 shadow-sm backdrop-blur-sm">
-        <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold text-[#2D5016] sm:text-5xl">
-          Love Matcha
-        </h1>
-        <p className="mx-auto mt-3 max-w-md text-base leading-relaxed text-[#1A1A1A]/70">
-          Ceremonial-grade matcha, poured slowly, across South Africa.
-        </p>
-      </div>
+    <main>
+      {/* ── Hero ── */}
+      <section className="relative min-h-[90vh] overflow-hidden bg-matcha-dark">
+        <MatchaLeafWatermark />
 
-      <div className="grid w-full max-w-3xl grid-cols-1 gap-6 sm:grid-cols-3">
-        {LANDING_LINKS.map((link) => (
-          <Link
-            key={link.href}
-            href={link.href}
-            className="flex flex-col items-start gap-2 rounded-[8px] border border-[#2D5016]/10 bg-white/85 p-6 text-left shadow-sm backdrop-blur-sm transition-shadow hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FAF6A]"
-          >
-            <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-[#2D5016]">
-              {link.label} →
-            </span>
-            <span className="text-sm leading-relaxed text-[#1A1A1A]/70">{link.description}</span>
-          </Link>
-        ))}
-      </div>
+        {/* subtle grid overlay */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 opacity-5"
+          style={{
+            backgroundImage:
+              'linear-gradient(#F7F2E8 1px, transparent 1px), linear-gradient(90deg, #F7F2E8 1px, transparent 1px)',
+            backgroundSize: '48px 48px',
+          }}
+        />
+
+        <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 py-24 lg:flex-row lg:gap-16">
+          {/* Left — copy */}
+          <div className="max-w-xl text-center lg:text-left">
+            <p className="text-sm font-medium uppercase tracking-[0.35em] text-gold">
+              Premium Ceremonial Grade
+            </p>
+            <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-[1.1] tracking-tight text-cream sm:text-6xl lg:text-7xl">
+              Premium Matcha.{' '}
+              <span className="text-matcha-mid">Calm Energy.</span>{' '}
+              Made for South Africa.
+            </h1>
+            <p className="mt-6 text-lg leading-relaxed text-cream/70">
+              Discover Love Matcha&apos;s ceremonial-grade drinks, powders, starter kits and store locations across SA.
+            </p>
+            <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
+              <Link
+                href="/products"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#b8913f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              >
+                Shop Products
+              </Link>
+              <Link
+                href="/stores"
+                className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream/50 hover:bg-cream/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
+              >
+                Find a Store
+              </Link>
+            </div>
+          </div>
+
+          {/* Right — hero image placeholder */}
+          <div className="mt-12 w-full max-w-sm shrink-0 lg:mt-0">
+            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl bg-matcha-mid/30">
+              <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
+                <div className="h-20 w-20 rounded-full bg-cream/10" />
+                <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-cream/60">
+                  Love Matcha
+                </p>
+                <p className="text-xs text-cream/40">Product photography coming soon</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5">
+          <div className="h-8 w-px bg-cream/20" />
+          <span className="text-xs text-cream/40">Scroll</span>
+        </div>
+      </section>
+
+      {/* ── Trust badges ── */}
+      <section aria-label="Delivery and service highlights" className="border-b border-matcha-dark/10 bg-card px-6 py-6">
+        <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 lg:grid-cols-4">
+          {TRUST_BADGES.map((badge) => (
+            <div key={badge.label} className="flex items-center gap-3 py-2">
+              <span aria-hidden="true" className="text-xl text-matcha-mid">{badge.icon}</span>
+              <div>
+                <p className="text-sm font-semibold text-matcha-dark">{badge.label}</p>
+                <p className="text-xs text-charcoal/55">{badge.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── Popular Products ── */}
+      <section aria-labelledby="products-heading" className="px-6 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">Our Range</p>
+              <h2
+                id="products-heading"
+                className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark sm:text-5xl"
+              >
+                Popular Products
+              </h2>
+            </div>
+            <Link
+              href="/products"
+              className="hidden shrink-0 text-sm font-medium text-matcha-mid underline-offset-4 hover:underline sm:block"
+            >
+              See all products →
+            </Link>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+            {PRODUCTS.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+
+          <div className="mt-6 text-center sm:hidden">
+            <Link href="/products" className="text-sm font-medium text-matcha-mid underline-offset-4 hover:underline">
+              See all products →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Why Matcha ── */}
+      <WhyMatcha />
+
+      {/* ── Featured Stores preview ── */}
+      <section aria-labelledby="stores-preview-heading" className="px-6 py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">Visit Us</p>
+              <h2
+                id="stores-preview-heading"
+                className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark sm:text-5xl"
+              >
+                Find a Store Near You
+              </h2>
+            </div>
+            <Link
+              href="/stores"
+              className="hidden shrink-0 text-sm font-medium text-matcha-mid underline-offset-4 hover:underline sm:block"
+            >
+              All 12 locations →
+            </Link>
+          </div>
+
+          <div className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+            {featuredStores.map((store) => (
+              <StoreCard key={store.id} store={store} />
+            ))}
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              href="/stores"
+              className="inline-flex items-center gap-2 rounded-full border border-matcha-dark px-6 py-3 text-sm font-semibold text-matcha-dark transition-colors hover:bg-matcha-dark hover:text-cream"
+            >
+              View All 12 Locations →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Lifestyle Gallery ── */}
+      <section aria-labelledby="gallery-heading" className="bg-cream px-6 py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 text-center">
+            <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">The Ritual</p>
+            <h2
+              id="gallery-heading"
+              className="mt-2 font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark"
+            >
+              Life Tastes Better With Matcha
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
+            {GALLERY_COLORS.map((color, i) => (
+              <div
+                key={i}
+                className="aspect-square overflow-hidden rounded-xl"
+                style={{ backgroundColor: color }}
+                aria-hidden="true"
+              />
+            ))}
+          </div>
+
+          <p className="mt-6 text-center text-sm text-charcoal/50">
+            Follow us{' '}
+            <a
+              href="https://www.instagram.com/lovematcha.co.za"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-medium text-matcha-mid underline-offset-4 hover:underline"
+            >
+              @lovematcha.co.za
+            </a>
+          </p>
+        </div>
+      </section>
+
+      {/* ── Reviews ── */}
+      <ReviewsSection />
+
+      {/* ── Franchise CTA ── */}
+      <FranchiseCTA />
     </main>
   );
 }

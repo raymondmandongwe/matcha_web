@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Playfair_Display, Inter } from 'next/font/google';
 import './globals.css';
+import { DeliveryBanner } from './components/DeliveryBanner';
 import { NavBar } from './components/NavBar';
 import { Footer } from './components/Footer';
 
@@ -8,14 +9,19 @@ const playfair = Playfair_Display({ subsets: ['latin'], weight: ['500', '600', '
 const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600'], variable: '--font-body' });
 
 export const metadata: Metadata = {
-  title: 'Love Matcha',
-  description: 'Locate your nearest Love Matcha store, get directions, hours, and get in touch with us.',
+  title: {
+    default: 'Love Matcha — Premium Ceremonial Matcha',
+    template: '%s | Love Matcha',
+  },
+  description:
+    'Premium ceremonial-grade matcha drinks, powders, and starter kits. 12 stores across South Africa. Nationwide delivery R89.',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="font-[family-name:var(--font-body)] bg-[#F9F5EE] text-[#1A1A1A]">
+      <body className="font-[family-name:var(--font-body)] bg-cream text-charcoal">
+        <DeliveryBanner />
         <NavBar />
         {children}
         <Footer />

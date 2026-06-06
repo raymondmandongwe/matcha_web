@@ -5,3 +5,21 @@
 html {
   scroll-behavior: smooth;
 }
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background-color: #C6A15B;
+    color: #1F3324;
+  }
+}
