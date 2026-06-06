@@ -36,7 +36,7 @@ function StarRating({ rating }: { rating: number }) {
 
 export function ReviewsSection() {
   return (
-    <section aria-labelledby="reviews-heading" className="bg-gold px-6 py-20 sm:py-28">
+    <section aria-labelledby="reviews-heading" className="bg-gold/85 px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">Social Proof</p>

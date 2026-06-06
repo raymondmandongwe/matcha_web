@@ -36,7 +36,7 @@ const FOOTER_LINKS = [
 
 export function Footer() {
   return (
-    <footer className="bg-matcha-dark px-6 py-16 text-cream">
+    <footer className="bg-matcha-dark/90 px-6 py-16 text-cream">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4 lg:grid-cols-5">
           <div className="col-span-2 lg:col-span-2">

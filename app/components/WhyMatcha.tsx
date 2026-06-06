@@ -27,7 +27,7 @@ const BENEFITS = [
 
 export function WhyMatcha() {
   return (
-    <section aria-labelledby="why-matcha-heading" className="bg-matcha-dark px-6 py-20 sm:py-28">
+    <section aria-labelledby="why-matcha-heading" className="bg-matcha-dark/90 px-6 py-20 sm:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mx-auto max-w-2xl text-center">
           <p className="text-sm font-medium uppercase tracking-[0.3em] text-gold">The Science &amp; Ritual</p>

@@ -71,7 +71,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Trust badges ── */}
-      <section aria-label="Delivery and service highlights" className="border-b border-matcha-dark/10 bg-card px-6 py-6">
+      <section aria-label="Delivery and service highlights" className="border-b border-matcha-dark/10 bg-card/85 px-6 py-6">
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-4 lg:grid-cols-4">
           {TRUST_BADGES.map((badge) => (
             <div key={badge.label} className="flex items-center gap-3 py-2">
@@ -89,7 +89,7 @@ export default function HomePage() {
       <WhyMatcha />
 
       {/* ── Lifestyle Gallery ── */}
-      <section aria-labelledby="gallery-heading" className="bg-gold px-6 py-20">
+      <section aria-labelledby="gallery-heading" className="bg-gold/85 px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 text-center">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">The Ritual</p>

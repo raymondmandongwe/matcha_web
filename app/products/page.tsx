@@ -31,7 +31,7 @@ export default function ProductsPage() {
       </section>
 
       {/* Ordering info */}
-      <section aria-labelledby="ordering-heading" className="bg-matcha-dark px-6 py-16">
+      <section aria-labelledby="ordering-heading" className="bg-matcha-dark/90 px-6 py-16">
         <div className="mx-auto max-w-5xl">
           <h2
             id="ordering-heading"

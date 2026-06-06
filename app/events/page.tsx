@@ -102,7 +102,7 @@ export default function EventsPage() {
       </section>
 
       {/* Partners */}
-      <section aria-labelledby="partners-heading" className="bg-matcha-dark px-6 py-16 sm:py-24">
+      <section aria-labelledby="partners-heading" className="bg-matcha-dark/90 px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl">
           <h2
             id="partners-heading"

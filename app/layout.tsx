@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="font-[family-name:var(--font-body)] bg-gold text-charcoal">
+      <body className="bg-[url('/matcha_web/matcha-home-bg.png')] bg-cover bg-center bg-fixed font-[family-name:var(--font-body)] text-charcoal">
         <DeliveryBanner />
         <NavBar />
         {children}

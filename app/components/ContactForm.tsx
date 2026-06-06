@@ -162,7 +162,7 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <section aria-labelledby="contact-success-heading" className="bg-gold px-6 py-16 sm:py-24">
+      <section aria-labelledby="contact-success-heading" className="bg-gold/85 px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(18,138,0,0.2)]">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-matcha-mid/20">
             <span aria-hidden="true" className="text-3xl text-matcha-mid">✓</span>
@@ -193,7 +193,7 @@ export function ContactForm() {
   /* ── Form ── */
 
   return (
-    <section aria-labelledby="contact-form-heading" className="bg-gold px-6 py-16 sm:py-24">
+    <section aria-labelledby="contact-form-heading" className="bg-gold/85 px-6 py-16 sm:py-24">
       <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(18,138,0,0.2)] sm:p-10">
         <h2
           id="contact-form-heading"
