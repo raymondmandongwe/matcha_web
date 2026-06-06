@@ -19,30 +19,22 @@ export default function HomePage() {
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative min-h-[90vh] overflow-hidden bg-matcha-dark">
+      <section className="relative min-h-[90vh] overflow-hidden bg-[url('/matcha_web/matcha-home-bg.png')] bg-cover bg-center">
         <MatchaLeafWatermark />
 
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-5"
-          style={{
-            backgroundImage:
-              'linear-gradient(#F7F2E8 1px, transparent 1px), linear-gradient(90deg, #F7F2E8 1px, transparent 1px)',
-            backgroundSize: '48px 48px',
-          }}
-        />
+        <div aria-hidden="true" className="absolute inset-0 bg-white/45" />
 
         <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 py-24 lg:flex-row lg:gap-16">
           <div className="max-w-xl text-center lg:text-left">
             <p className="text-sm font-medium uppercase tracking-[0.35em] text-gold">
               Premium Ceremonial Grade
             </p>
-            <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-[1.1] tracking-tight text-cream sm:text-6xl lg:text-7xl">
+            <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-[1.1] tracking-tight text-matcha-dark drop-shadow-[0_2px_12px_rgba(255,255,255,0.85)] sm:text-6xl lg:text-7xl">
               Premium Matcha.{' '}
               <span className="text-matcha-mid">Calm Energy.</span>{' '}
               Made for South Africa.
             </h1>
-            <p className="mt-6 text-lg leading-relaxed text-cream/70">
+            <p className="mt-6 text-lg font-medium leading-relaxed text-charcoal/75 drop-shadow-[0_1px_8px_rgba(255,255,255,0.9)]">
               Discover Love Matcha&apos;s ceremonial-grade drinks, powders, starter kits and store locations across SA.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
@@ -54,7 +46,7 @@ export default function HomePage() {
               </Link>
               <Link
                 href="/stores"
-                className="rounded-full border border-cream/25 px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:border-cream/50 hover:bg-cream/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cream"
+                className="rounded-full border border-matcha-dark/25 bg-white/40 px-7 py-3.5 text-sm font-semibold text-matcha-dark backdrop-blur-sm transition-colors hover:border-matcha-dark/45 hover:bg-white/65 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-dark"
               >
                 Find a Store
               </Link>
@@ -62,21 +54,21 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 w-full max-w-sm shrink-0 lg:mt-0">
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl bg-matcha-mid/30">
+            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-white/40 bg-white/35 shadow-[0_20px_60px_-15px_rgba(45,80,22,0.25)] backdrop-blur-sm">
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
-                <div className="h-20 w-20 rounded-full bg-cream/10" />
-                <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-cream/60">
+                <div className="h-20 w-20 rounded-full bg-matcha-mid/15" />
+                <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-matcha-dark">
                   Love Matcha
                 </p>
-                <p className="text-xs text-cream/40">Product photography coming soon</p>
+                <p className="text-xs font-medium text-charcoal/55">Product photography coming soon</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="absolute bottom-8 left-1/2 flex -translate-x-1/2 flex-col items-center gap-1.5">
-          <div className="h-8 w-px bg-cream/20" />
-          <span className="text-xs text-cream/40">Scroll</span>
+          <div className="h-8 w-px bg-matcha-dark/20" />
+          <span className="text-xs font-medium text-matcha-dark/55">Scroll</span>
         </div>
       </section>
 
