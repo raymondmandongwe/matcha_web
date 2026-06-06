@@ -1,7 +1,12 @@
 'use client';
 
-import { useRef, useState } from 'react';
-import type { ChangeEvent, FormEvent } from 'react';
+import { useCallback, useRef, useState } from 'react';
+import type { ChangeEvent, FocusEvent, FormEvent } from 'react';
+import emailjs from '@emailjs/browser';
+
+/* ----------------------------------------------------------------------- */
+/* Types                                                                    */
+/* ----------------------------------------------------------------------- */
 
 export interface ContactFormData {
   name: string;
@@ -10,170 +15,356 @@ export interface ContactFormData {
   message: string;
 }
 
-type ContactFormErrors = Partial<Record<keyof ContactFormData, string>>;
+type FormErrors = Partial<Record<keyof ContactFormData, string>>;
+type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
-const EMPTY_FORM_DATA: ContactFormData = { name: '', email: '', phone: '', message: '' };
+/* ----------------------------------------------------------------------- */
+/* Config — set these as GitHub repo secrets and in .env.local              */
+/* NEXT_PUBLIC_EMAILJS_SERVICE_ID                                           */
+/* NEXT_PUBLIC_EMAILJS_TEMPLATE_ID                                          */
+/* NEXT_PUBLIC_EMAILJS_PUBLIC_KEY                                           */
+/* ----------------------------------------------------------------------- */
 
-function validateContactForm(data: ContactFormData): ContactFormErrors {
-  const errors: ContactFormErrors = {};
+const SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? '';
+const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? '';
+const PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  ?? '';
 
-  if (!data.name.trim()) {
-    errors.name = 'Please tell us your name.';
+const EMPTY: ContactFormData = { name: '', email: '', phone: '', message: '' };
+const MESSAGE_MAX = 500;
+
+/* ----------------------------------------------------------------------- */
+/* Validation                                                               */
+/* ----------------------------------------------------------------------- */
+
+function validate(
+  data: ContactFormData,
+  touched: ReadonlySet<keyof ContactFormData>,
+): FormErrors {
+  const errors: FormErrors = {};
+
+  if (touched.has('name') && !data.name.trim()) {
+    errors.name = 'Your name is required.';
   }
 
-  if (!data.email.trim()) {
-    errors.email = 'Email is required.';
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
-    errors.email = 'Enter a valid email address.';
+  if (touched.has('email')) {
+    if (!data.email.trim()) {
+      errors.email = 'Email address is required.';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) {
+      errors.email = 'Please enter a valid email address.';
+    }
   }
 
-  if (!data.message.trim()) {
-    errors.message = 'Let us know how we can help.';
+  if (touched.has('message')) {
+    if (!data.message.trim()) {
+      errors.message = 'Please write us a message.';
+    } else if (data.message.length > MESSAGE_MAX) {
+      errors.message = `Keep it under ${MESSAGE_MAX} characters (${data.message.length} used).`;
+    }
   }
 
   return errors;
 }
 
+const ALL_FIELDS = new Set<keyof ContactFormData>(['name', 'email', 'phone', 'message']);
+
+/* ----------------------------------------------------------------------- */
+/* Component                                                                */
+/* ----------------------------------------------------------------------- */
+
 export function ContactForm() {
-  const [formData, setFormData] = useState<ContactFormData>(EMPTY_FORM_DATA);
-  const [errors, setErrors] = useState<ContactFormErrors>({});
-  const [submitted, setSubmitted] = useState(false);
+  const [data, setData]       = useState<ContactFormData>(EMPTY);
+  const [touched, setTouched] = useState<Set<keyof ContactFormData>>(new Set());
+  const [status, setStatus]   = useState<FormStatus>('idle');
+  const [sendError, setSendError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
-  const handleChange =
-    (field: keyof ContactFormData) => (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const { value } = event.target;
-      setFormData((prev) => ({ ...prev, [field]: value }));
-      setErrors((prev) => (prev[field] ? { ...prev, [field]: undefined } : prev));
-    };
+  const errors    = validate(data, touched);
+  const isSending = status === 'sending';
+  const hasErrors = Object.keys(errors).length > 0;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const validationErrors = validateContactForm(formData);
-    setErrors(validationErrors);
+  /* handlers */
 
-    const firstInvalidField = (Object.keys(validationErrors) as (keyof ContactFormData)[])[0];
-    if (firstInvalidField) {
-      formRef.current?.querySelector<HTMLElement>(`[name="${firstInvalidField}"]`)?.focus();
+  const handleChange = useCallback(
+    (field: keyof ContactFormData) =>
+      (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setData((prev) => ({ ...prev, [field]: e.target.value }));
+      },
+    [],
+  );
+
+  const handleBlur = useCallback(
+    (field: keyof ContactFormData) => (_: FocusEvent) => {
+      setTouched((prev) => new Set([...prev, field]));
+    },
+    [],
+  );
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Mark all fields touched so every error becomes visible
+    setTouched(ALL_FIELDS);
+    const allErrors = validate(data, ALL_FIELDS);
+    if (Object.keys(allErrors).length > 0) {
+      const first = Object.keys(allErrors)[0] as keyof ContactFormData;
+      formRef.current?.querySelector<HTMLElement>(`[name="${first}"]`)?.focus();
       return;
     }
 
-    setSubmitted(true);
-    setFormData(EMPTY_FORM_DATA);
+    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
+      setStatus('error');
+      setSendError(
+        'The email service is not configured yet. Please reach us directly at info@love-matcha.co.za',
+      );
+      return;
+    }
+
+    setStatus('sending');
+    setSendError('');
+
+    try {
+      await emailjs.send(
+        SERVICE_ID,
+        TEMPLATE_ID,
+        {
+          from_name: data.name.trim(),
+          from_email: data.email.trim(),
+          phone:      data.phone.trim() || 'Not provided',
+          message:    data.message.trim(),
+          reply_to:   data.email.trim(),
+        },
+        PUBLIC_KEY,
+      );
+      setStatus('success');
+      setData(EMPTY);
+      setTouched(new Set());
+    } catch (err) {
+      console.error('[EmailJS]', err);
+      setStatus('error');
+      setSendError(
+        'Something went wrong. Please try again or email us directly at info@love-matcha.co.za',
+      );
+    }
   };
 
-  const fieldClasses = (hasError: boolean) =>
-    `w-full rounded-lg border bg-[#F9F5EE]/60 px-4 py-2.5 text-sm text-[#1A1A1A] outline-none transition-colors placeholder:text-[#1A1A1A]/40 focus:border-[#2D5016] focus:ring-2 focus:ring-[#8FAF6A]/40 ${
-      hasError ? 'border-red-400' : 'border-[#2D5016]/15'
-    }`;
+  const reset = () => {
+    setStatus('idle');
+    setSendError('');
+  };
 
+  /* field styles */
+
+  const fieldCls = (field: keyof ContactFormData) =>
+    [
+      'w-full rounded-lg border bg-cream/60 px-4 py-2.5 text-sm text-charcoal outline-none',
+      'transition-colors placeholder:text-charcoal/35',
+      'focus:ring-2 disabled:opacity-50',
+      errors[field]
+        ? 'border-red-400 focus:border-red-500 focus:ring-red-200'
+        : 'border-matcha-dark/15 focus:border-matcha-dark focus:ring-matcha-mid/30',
+    ].join(' ');
+
+  /* ── Success state ── */
+  if (status === 'success') {
+    return (
+      <section aria-labelledby="contact-success-heading" className="bg-cream px-6 py-16 sm:py-24">
+        <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)]">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-matcha-mid/20">
+            <span aria-hidden="true" className="text-2xl text-matcha-mid">✓</span>
+          </div>
+          <h2
+            id="contact-success-heading"
+            className="mt-5 font-[family-name:var(--font-display)] text-2xl font-semibold text-matcha-dark"
+          >
+            Message Sent!
+          </h2>
+          <p className="mt-2 text-sm leading-relaxed text-charcoal/65">
+            Thanks for reaching out. The Love Matcha team will reply to{' '}
+            <span className="font-medium text-matcha-dark">{data.email || 'you'}</span> within
+            two business days.
+          </p>
+          <button
+            type="button"
+            onClick={reset}
+            className="mt-8 rounded-full border border-matcha-dark px-6 py-2.5 text-sm font-medium text-matcha-dark transition-colors hover:bg-matcha-dark hover:text-cream"
+          >
+            Send Another Message
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  /* ── Form ── */
   return (
-    <section aria-labelledby="contact-form-heading" className="bg-[#F9F5EE] px-6 py-16 sm:py-24">
-      <div className="mx-auto max-w-[600px] rounded-3xl bg-white p-8 shadow-[0_20px_60px_-15px_rgba(45,80,22,0.25)] sm:p-10">
-        <h2 id="contact-form-heading" className="font-[family-name:var(--font-display)] text-3xl font-semibold text-[#2D5016]">
+    <section aria-labelledby="contact-form-heading" className="bg-cream px-6 py-16 sm:py-24">
+      <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)] sm:p-10">
+        <h2
+          id="contact-form-heading"
+          className="font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark"
+        >
           Get in Touch
         </h2>
-        <p className="mt-2 text-sm leading-relaxed text-[#1A1A1A]/70">
-          Questions, feedback, or a stockist enquiry? Send us a note and the team will reply within two business days.
+        <p className="mt-2 text-sm leading-relaxed text-charcoal/65">
+          Questions, feedback, or a stockist enquiry? We reply within two business days.
         </p>
 
-        {submitted && (
-          <p role="status" className="mt-6 rounded-lg bg-[#8FAF6A]/20 px-4 py-3 text-sm font-medium text-[#2D5016]">
-            Thank you — your message has been sent. We&apos;ll be in touch soon.
-          </p>
+        {/* Send error */}
+        {status === 'error' && sendError && (
+          <div role="alert" className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            {sendError}
+          </div>
         )}
 
-        <form ref={formRef} noValidate onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <form
+          ref={formRef}
+          noValidate
+          onSubmit={handleSubmit}
+          className="mt-8 space-y-5"
+        >
+          {/* Name */}
           <div>
-            <label htmlFor="contact-name" className="block text-sm font-medium text-[#1A1A1A]">
-              Name
+            <label htmlFor="cf-name" className="block text-sm font-medium text-charcoal">
+              Name <span aria-hidden="true" className="text-red-500">*</span>
             </label>
             <input
-              id="contact-name"
+              id="cf-name"
               name="name"
               type="text"
               autoComplete="name"
-              value={formData.name}
+              disabled={isSending}
+              value={data.name}
               onChange={handleChange('name')}
+              onBlur={handleBlur('name')}
               aria-required="true"
               aria-invalid={Boolean(errors.name)}
-              aria-describedby={errors.name ? 'contact-name-error' : undefined}
-              className={`${fieldClasses(Boolean(errors.name))} mt-1.5`}
+              aria-describedby={errors.name ? 'cf-name-error' : undefined}
+              placeholder="Your full name"
+              className={`${fieldCls('name')} mt-1.5`}
             />
             {errors.name && (
-              <p id="contact-name-error" role="alert" className="mt-1.5 text-sm text-red-600">
+              <p id="cf-name-error" role="alert" className="mt-1.5 text-xs text-red-600">
                 {errors.name}
               </p>
             )}
           </div>
 
+          {/* Email */}
           <div>
-            <label htmlFor="contact-email" className="block text-sm font-medium text-[#1A1A1A]">
-              Email <span aria-hidden="true">*</span>
+            <label htmlFor="cf-email" className="block text-sm font-medium text-charcoal">
+              Email <span aria-hidden="true" className="text-red-500">*</span>
             </label>
             <input
-              id="contact-email"
+              id="cf-email"
               name="email"
               type="email"
               autoComplete="email"
-              value={formData.email}
+              disabled={isSending}
+              value={data.email}
               onChange={handleChange('email')}
+              onBlur={handleBlur('email')}
               aria-required="true"
               aria-invalid={Boolean(errors.email)}
-              aria-describedby={errors.email ? 'contact-email-error' : undefined}
-              className={`${fieldClasses(Boolean(errors.email))} mt-1.5`}
+              aria-describedby={errors.email ? 'cf-email-error' : undefined}
+              placeholder="you@example.com"
+              className={`${fieldCls('email')} mt-1.5`}
             />
             {errors.email && (
-              <p id="contact-email-error" role="alert" className="mt-1.5 text-sm text-red-600">
+              <p id="cf-email-error" role="alert" className="mt-1.5 text-xs text-red-600">
                 {errors.email}
               </p>
             )}
           </div>
 
+          {/* Phone */}
           <div>
-            <label htmlFor="contact-phone" className="block text-sm font-medium text-[#1A1A1A]">
-              Phone <span className="font-normal text-[#1A1A1A]/50">(optional)</span>
+            <label htmlFor="cf-phone" className="block text-sm font-medium text-charcoal">
+              Phone{' '}
+              <span className="font-normal text-charcoal/45">(optional)</span>
             </label>
             <input
-              id="contact-phone"
+              id="cf-phone"
               name="phone"
               type="tel"
               autoComplete="tel"
-              value={formData.phone}
+              disabled={isSending}
+              value={data.phone}
               onChange={handleChange('phone')}
-              aria-invalid={Boolean(errors.phone)}
-              className={`${fieldClasses(Boolean(errors.phone))} mt-1.5`}
+              onBlur={handleBlur('phone')}
+              placeholder="+27 XX XXX XXXX"
+              className={`${fieldCls('phone')} mt-1.5`}
             />
           </div>
 
+          {/* Message */}
           <div>
-            <label htmlFor="contact-message" className="block text-sm font-medium text-[#1A1A1A]">
-              Message
-            </label>
+            <div className="flex items-baseline justify-between">
+              <label htmlFor="cf-message" className="block text-sm font-medium text-charcoal">
+                Message <span aria-hidden="true" className="text-red-500">*</span>
+              </label>
+              <span
+                aria-live="polite"
+                className={`text-xs tabular-nums ${
+                  data.message.length > MESSAGE_MAX
+                    ? 'text-red-500'
+                    : data.message.length > MESSAGE_MAX * 0.85
+                    ? 'text-gold'
+                    : 'text-charcoal/40'
+                }`}
+              >
+                {data.message.length}/{MESSAGE_MAX}
+              </span>
+            </div>
             <textarea
-              id="contact-message"
+              id="cf-message"
               name="message"
-              rows={4}
-              value={formData.message}
+              rows={5}
+              disabled={isSending}
+              value={data.message}
               onChange={handleChange('message')}
+              onBlur={handleBlur('message')}
               aria-required="true"
               aria-invalid={Boolean(errors.message)}
-              aria-describedby={errors.message ? 'contact-message-error' : undefined}
-              className={`${fieldClasses(Boolean(errors.message))} mt-1.5 resize-none`}
+              aria-describedby={errors.message ? 'cf-message-error' : undefined}
+              placeholder="Tell us how we can help…"
+              className={`${fieldCls('message')} mt-1.5 resize-none`}
             />
             {errors.message && (
-              <p id="contact-message-error" role="alert" className="mt-1.5 text-sm text-red-600">
+              <p id="cf-message-error" role="alert" className="mt-1.5 text-xs text-red-600">
                 {errors.message}
               </p>
             )}
           </div>
 
+          {/* Submit */}
           <button
             type="submit"
-            className="w-full rounded-full bg-[#2D5016] px-6 py-3 text-sm font-semibold text-[#F9F5EE] transition-colors hover:bg-[#23400f] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FAF6A]"
+            disabled={isSending || (Object.keys(validate(data, touched)).length > 0 && touched.size > 0)}
+            aria-busy={isSending}
+            className="relative w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#162519] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
           >
-            Send Message
+            {isSending ? (
+              <span className="flex items-center justify-center gap-2">
+                <span
+                  aria-hidden="true"
+                  className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-cream/30 border-t-cream"
+                />
+                Sending…
+              </span>
+            ) : (
+              'Send Message'
+            )}
           </button>
+
+          <p className="text-center text-xs text-charcoal/40">
+            Or email us directly at{' '}
+            <a
+              href="mailto:info@love-matcha.co.za"
+              className="text-matcha-mid underline-offset-2 hover:underline"
+            >
+              info@love-matcha.co.za
+            </a>
+          </p>
         </form>
       </div>
     </section>
