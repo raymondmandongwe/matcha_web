@@ -2,7 +2,6 @@
 
 import { useCallback, useRef, useState } from 'react';
 import type { ChangeEvent, FocusEvent, FormEvent } from 'react';
-import emailjs from '@emailjs/browser';
 
 /* ----------------------------------------------------------------------- */
 /* Types                                                                    */
@@ -19,18 +18,13 @@ type FormErrors = Partial<Record<keyof ContactFormData, string>>;
 type FormStatus = 'idle' | 'sending' | 'success' | 'error';
 
 /* ----------------------------------------------------------------------- */
-/* Config — set these as GitHub repo secrets and in .env.local              */
-/* NEXT_PUBLIC_EMAILJS_SERVICE_ID                                           */
-/* NEXT_PUBLIC_EMAILJS_TEMPLATE_ID                                          */
-/* NEXT_PUBLIC_EMAILJS_PUBLIC_KEY                                           */
+/* Constants                                                                */
 /* ----------------------------------------------------------------------- */
 
-const SERVICE_ID  = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID  ?? '';
-const TEMPLATE_ID = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID ?? '';
-const PUBLIC_KEY  = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY  ?? '';
-
+const FORMSUBMIT_URL = 'https://formsubmit.co/ajax/info@love-matcha.co.za';
 const EMPTY: ContactFormData = { name: '', email: '', phone: '', message: '' };
 const MESSAGE_MAX = 500;
+const ALL_FIELDS = new Set<keyof ContactFormData>(['name', 'email', 'phone', 'message']);
 
 /* ----------------------------------------------------------------------- */
 /* Validation                                                               */
@@ -65,24 +59,21 @@ function validate(
   return errors;
 }
 
-const ALL_FIELDS = new Set<keyof ContactFormData>(['name', 'email', 'phone', 'message']);
-
 /* ----------------------------------------------------------------------- */
 /* Component                                                                */
 /* ----------------------------------------------------------------------- */
 
 export function ContactForm() {
-  const [data, setData]       = useState<ContactFormData>(EMPTY);
-  const [touched, setTouched] = useState<Set<keyof ContactFormData>>(new Set());
-  const [status, setStatus]   = useState<FormStatus>('idle');
+  const [data, setData]           = useState<ContactFormData>(EMPTY);
+  const [touched, setTouched]     = useState<Set<keyof ContactFormData>>(new Set());
+  const [status, setStatus]       = useState<FormStatus>('idle');
   const [sendError, setSendError] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
 
   const errors    = validate(data, touched);
   const isSending = status === 'sending';
-  const hasErrors = Object.keys(errors).length > 0;
 
-  /* handlers */
+  /* ── handlers ── */
 
   const handleChange = useCallback(
     (field: keyof ContactFormData) =>
@@ -102,7 +93,7 @@ export function ContactForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    // Mark all fields touched so every error becomes visible
+    // Reveal all validation errors
     setTouched(ALL_FIELDS);
     const allErrors = validate(data, ALL_FIELDS);
     if (Object.keys(allErrors).length > 0) {
@@ -111,38 +102,41 @@ export function ContactForm() {
       return;
     }
 
-    if (!SERVICE_ID || !TEMPLATE_ID || !PUBLIC_KEY) {
-      setStatus('error');
-      setSendError(
-        'The email service is not configured yet. Please reach us directly at info@love-matcha.co.za',
-      );
-      return;
-    }
-
     setStatus('sending');
     setSendError('');
 
     try {
-      await emailjs.send(
-        SERVICE_ID,
-        TEMPLATE_ID,
-        {
-          from_name: data.name.trim(),
-          from_email: data.email.trim(),
-          phone:      data.phone.trim() || 'Not provided',
-          message:    data.message.trim(),
-          reply_to:   data.email.trim(),
+      const res = await fetch(FORMSUBMIT_URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
         },
-        PUBLIC_KEY,
-      );
-      setStatus('success');
-      setData(EMPTY);
-      setTouched(new Set());
+        body: JSON.stringify({
+          name:     data.name.trim(),
+          email:    data.email.trim(),
+          phone:    data.phone.trim() || 'Not provided',
+          message:  data.message.trim(),
+          _subject: `New enquiry from ${data.name.trim()} — Love Matcha`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+
+      const json = await res.json();
+
+      if (json.success === 'true' || json.success === true) {
+        setStatus('success');
+        setData(EMPTY);
+        setTouched(new Set());
+      } else {
+        throw new Error(json.message ?? 'Submission failed');
+      }
     } catch (err) {
-      console.error('[EmailJS]', err);
+      console.error('[ContactForm]', err);
       setStatus('error');
       setSendError(
-        'Something went wrong. Please try again or email us directly at info@love-matcha.co.za',
+        'Something went wrong sending your message. Please try again or email us directly at info@love-matcha.co.za',
       );
     }
   };
@@ -152,7 +146,7 @@ export function ContactForm() {
     setSendError('');
   };
 
-  /* field styles */
+  /* ── field class helper ── */
 
   const fieldCls = (field: keyof ContactFormData) =>
     [
@@ -164,13 +158,14 @@ export function ContactForm() {
         : 'border-matcha-dark/15 focus:border-matcha-dark focus:ring-matcha-mid/30',
     ].join(' ');
 
-  /* ── Success state ── */
+  /* ── Success screen ── */
+
   if (status === 'success') {
     return (
       <section aria-labelledby="contact-success-heading" className="bg-cream px-6 py-16 sm:py-24">
         <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)]">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-matcha-mid/20">
-            <span aria-hidden="true" className="text-2xl text-matcha-mid">✓</span>
+            <span aria-hidden="true" className="text-3xl text-matcha-mid">✓</span>
           </div>
           <h2
             id="contact-success-heading"
@@ -196,6 +191,7 @@ export function ContactForm() {
   }
 
   /* ── Form ── */
+
   return (
     <section aria-labelledby="contact-form-heading" className="bg-cream px-6 py-16 sm:py-24">
       <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)] sm:p-10">
@@ -209,19 +205,15 @@ export function ContactForm() {
           Questions, feedback, or a stockist enquiry? We reply within two business days.
         </p>
 
-        {/* Send error */}
+        {/* Send error banner */}
         {status === 'error' && sendError && (
           <div role="alert" className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
             {sendError}
           </div>
         )}
 
-        <form
-          ref={formRef}
-          noValidate
-          onSubmit={handleSubmit}
-          className="mt-8 space-y-5"
-        >
+        <form ref={formRef} noValidate onSubmit={handleSubmit} className="mt-8 space-y-5">
+
           {/* Name */}
           <div>
             <label htmlFor="cf-name" className="block text-sm font-medium text-charcoal">
@@ -304,7 +296,7 @@ export function ContactForm() {
               </label>
               <span
                 aria-live="polite"
-                className={`text-xs tabular-nums ${
+                className={`text-xs tabular-nums transition-colors ${
                   data.message.length > MESSAGE_MAX
                     ? 'text-red-500'
                     : data.message.length > MESSAGE_MAX * 0.85
@@ -312,7 +304,7 @@ export function ContactForm() {
                     : 'text-charcoal/40'
                 }`}
               >
-                {data.message.length}/{MESSAGE_MAX}
+                {data.message.length} / {MESSAGE_MAX}
               </span>
             </div>
             <textarea
@@ -339,9 +331,9 @@ export function ContactForm() {
           {/* Submit */}
           <button
             type="submit"
-            disabled={isSending || (Object.keys(validate(data, touched)).length > 0 && touched.size > 0)}
+            disabled={isSending}
             aria-busy={isSending}
-            className="relative w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#162519] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#162519] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSending ? (
               <span className="flex items-center justify-center gap-2">
