@@ -8,7 +8,7 @@ interface PageHeroProps {
 
 export function PageHero({ eyebrow, title, description }: PageHeroProps) {
   return (
-    <header className="relative overflow-hidden bg-gradient-to-br from-matcha-dark via-[#A8335A] to-matcha-mid py-20 text-center sm:py-28">
+    <header className="relative overflow-hidden bg-gradient-to-br from-matcha-dark via-[#128A00] to-matcha-mid py-20 text-center sm:py-28">
       <MatchaLeafWatermark />
       <div className="relative mx-auto max-w-3xl px-6">
         <p className="text-sm font-medium uppercase tracking-[0.3em] text-cream/70">{eyebrow}</p>

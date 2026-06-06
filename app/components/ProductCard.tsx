@@ -35,7 +35,7 @@ export function ProductCard({ product }: { product: Product }) {
             target="_blank"
             rel="noopener noreferrer"
             aria-label={`View ${product.name} on the Love Matcha store`}
-            className="flex-1 rounded-full bg-matcha-dark py-2.5 text-center text-sm font-medium text-cream transition-colors hover:bg-[#5E1530] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid"
+            className="flex-1 rounded-full bg-matcha-dark py-2.5 text-center text-sm font-medium text-cream transition-colors hover:bg-[#128A00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid"
           >
             View Product
           </a>

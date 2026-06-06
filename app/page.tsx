@@ -12,7 +12,7 @@ const TRUST_BADGES = [
 ] as const;
 
 const GALLERY_COLORS = [
-  '#A8D58D', '#A8D58D', '#FF8ACB', '#A8D58D', '#9B2E52', '#FF8ACB',
+  '#128A00', '#128A00', '#F8A8D8', '#128A00', '#128A00', '#F8A8D8',
 ] as const;
 
 export default function HomePage() {
@@ -22,25 +22,23 @@ export default function HomePage() {
       <section className="relative min-h-[90vh] overflow-hidden bg-[url('/matcha_web/matcha-home-bg.png')] bg-cover bg-center">
         <MatchaLeafWatermark />
 
-        <div aria-hidden="true" className="absolute inset-0 bg-white/45" />
-
         <div className="relative mx-auto flex min-h-[90vh] max-w-7xl flex-col items-center justify-center px-6 py-24 lg:flex-row lg:gap-16">
           <div className="max-w-xl text-center lg:text-left">
             <p className="text-sm font-medium uppercase tracking-[0.35em] text-gold">
               Premium Ceremonial Grade
             </p>
-            <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-[1.1] tracking-tight text-matcha-dark drop-shadow-[0_2px_12px_rgba(255,255,255,0.85)] sm:text-6xl lg:text-7xl">
+            <h1 className="mt-4 font-[family-name:var(--font-display)] text-5xl font-semibold leading-[1.1] tracking-tight text-matcha-dark sm:text-6xl lg:text-7xl">
               Premium Matcha.{' '}
               <span className="text-matcha-mid">Calm Energy.</span>{' '}
               Made for South Africa.
             </h1>
-            <p className="mt-6 text-lg font-medium leading-relaxed text-charcoal/75 drop-shadow-[0_1px_8px_rgba(255,255,255,0.9)]">
+            <p className="mt-6 text-lg font-medium leading-relaxed text-charcoal/75">
               Discover Love Matcha&apos;s ceremonial-grade drinks, powders, starter kits and store locations across SA.
             </p>
             <div className="mt-10 flex flex-wrap justify-center gap-4 lg:justify-start">
               <Link
                 href="/products"
-                className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#3A6347] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+                className="rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#128A00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
               >
                 Shop Products
               </Link>
@@ -54,7 +52,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 w-full max-w-sm shrink-0 lg:mt-0">
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-white/40 bg-white/35 shadow-[0_20px_60px_-15px_rgba(168,213,141,0.25)] backdrop-blur-sm">
+            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-white/40 bg-white/35 shadow-[0_20px_60px_-15px_rgba(18,138,0,0.25)] backdrop-blur-sm">
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
                 <div className="h-20 w-20 rounded-full bg-matcha-mid/15" />
                 <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-matcha-dark">
@@ -91,7 +89,7 @@ export default function HomePage() {
       <WhyMatcha />
 
       {/* ── Lifestyle Gallery ── */}
-      <section aria-labelledby="gallery-heading" className="bg-cream px-6 py-20">
+      <section aria-labelledby="gallery-heading" className="bg-gold px-6 py-20">
         <div className="mx-auto max-w-7xl">
           <div className="mb-8 text-center">
             <p className="text-sm font-medium uppercase tracking-[0.3em] text-matcha-mid">The Ritual</p>

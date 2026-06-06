@@ -52,7 +52,7 @@ export function NavBar() {
         <div className="hidden items-center gap-3 lg:flex">
           <Link
             href="/products"
-            className="rounded-full bg-matcha-dark px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-[#5E1530]"
+            className="rounded-full bg-matcha-dark px-4 py-2 text-sm font-semibold text-cream transition-colors hover:bg-[#128A00]"
           >
             Shop Now
           </Link>

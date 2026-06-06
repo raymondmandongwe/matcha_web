@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 export function FranchiseCTA() {
   return (
-    <section aria-labelledby="franchise-cta-heading" className="bg-cream px-6 py-20">
+    <section aria-labelledby="franchise-cta-heading" className="bg-gold px-6 py-20">
       <div className="mx-auto max-w-5xl overflow-hidden rounded-3xl bg-matcha-dark">
         <div className="grid grid-cols-1 gap-0 lg:grid-cols-2">
           <div className="p-10 sm:p-14">
@@ -19,7 +19,7 @@ export function FranchiseCTA() {
             </p>
             <Link
               href="/franchise"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#3A6347]"
+              className="mt-8 inline-flex items-center gap-2 rounded-full bg-gold px-6 py-3 text-sm font-semibold text-matcha-dark transition-colors hover:bg-[#128A00]"
             >
               Learn About Franchising →
             </Link>

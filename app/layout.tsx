@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${playfair.variable} ${inter.variable}`}>
-      <body className="font-[family-name:var(--font-body)] bg-cream text-charcoal">
+      <body className="font-[family-name:var(--font-body)] bg-gold text-charcoal">
         <DeliveryBanner />
         <NavBar />
         {children}

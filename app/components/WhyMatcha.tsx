@@ -46,7 +46,7 @@ export function WhyMatcha() {
           {BENEFITS.map((benefit, i) => (
             <div
               key={benefit.title}
-              className="group bg-matcha-dark p-8 transition-colors hover:bg-[#9B2E52]"
+              className="group bg-matcha-dark p-8 transition-colors hover:bg-[#128A00]"
             >
               <span className="font-[family-name:var(--font-display)] text-4xl font-semibold text-gold/30">
                 {String(i + 1).padStart(2, '0')}

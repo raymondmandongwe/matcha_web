@@ -5,11 +5,11 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        matcha: { dark: '#A8D58D', mid: '#A8D58D', light: '#A8D58D' },
-        gold: '#FF8ACB',   // green highlight
-        cream: '#FFFFFF',  // blush background
-        card: '#FFFFFF',   // soft pink-white cards
-        charcoal: '#A8D58D',
+        matcha: { dark: '#128A00', mid: '#128A00', light: '#128A00' },
+        gold: '#F8A8D8',
+        cream: '#FFFFFF',
+        card: '#FFFFFF',
+        charcoal: '#128A00',
       },
       animation: {
         'fade-in': 'fadeIn 0.4s ease-out',

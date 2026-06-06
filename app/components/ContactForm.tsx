@@ -162,8 +162,8 @@ export function ContactForm() {
 
   if (status === 'success') {
     return (
-      <section aria-labelledby="contact-success-heading" className="bg-cream px-6 py-16 sm:py-24">
-        <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(168,213,141,0.2)]">
+      <section aria-labelledby="contact-success-heading" className="bg-gold px-6 py-16 sm:py-24">
+        <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(18,138,0,0.2)]">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-matcha-mid/20">
             <span aria-hidden="true" className="text-3xl text-matcha-mid">✓</span>
           </div>
@@ -193,8 +193,8 @@ export function ContactForm() {
   /* ── Form ── */
 
   return (
-    <section aria-labelledby="contact-form-heading" className="bg-cream px-6 py-16 sm:py-24">
-      <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(168,213,141,0.2)] sm:p-10">
+    <section aria-labelledby="contact-form-heading" className="bg-gold px-6 py-16 sm:py-24">
+      <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(18,138,0,0.2)] sm:p-10">
         <h2
           id="contact-form-heading"
           className="font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark"
@@ -333,7 +333,7 @@ export function ContactForm() {
             type="submit"
             disabled={isSending}
             aria-busy={isSending}
-            className="w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#5E1530] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
+            className="w-full rounded-full bg-matcha-dark px-6 py-3 text-sm font-semibold text-cream transition-all hover:bg-[#128A00] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-matcha-mid disabled:cursor-not-allowed disabled:opacity-60"
           >
             {isSending ? (
               <span className="flex items-center justify-center gap-2">

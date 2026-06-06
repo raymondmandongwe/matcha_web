@@ -75,7 +75,7 @@ export default function FranchisePage() {
           <div className="mt-8 flex flex-wrap justify-center gap-4">
             <a
               href="mailto:franchise@love-matcha.co.za"
-              className="rounded-full bg-matcha-dark px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#5E1530]"
+              className="rounded-full bg-matcha-dark px-7 py-3.5 text-sm font-semibold text-cream transition-colors hover:bg-[#128A00]"
             >
               Email Us About Franchising
             </a>
