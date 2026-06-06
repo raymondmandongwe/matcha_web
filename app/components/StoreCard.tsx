@@ -26,7 +26,7 @@ export function StoreCard({ store }: { store: Store }) {
       tabIndex={0}
       onFocus={handleFocus}
       aria-label={`${store.name} store details`}
-      className="flex flex-col rounded-2xl border border-matcha-dark/10 bg-card p-5 shadow-sm outline-none transition-all hover:shadow-lg hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-matcha-mid focus-visible:ring-offset-2"
+      className="flex flex-col rounded-2xl border border-matcha-dark/10 bg-card p-5 outline-none transition-all hover:-translate-y-0.5 focus-visible:ring-2 focus-visible:ring-matcha-mid focus-visible:ring-offset-2"
     >
       <div className="relative">
         <ImageCarousel images={store.images} label={store.name} />

@@ -23,7 +23,7 @@ export function StoreFilterGrid({ stores }: { stores: Store[] }) {
           aria-pressed={activeArea === null}
           className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
             activeArea === null
-              ? 'bg-matcha-dark text-cream shadow-sm'
+              ? 'bg-matcha-dark text-cream'
               : 'border border-matcha-dark/20 text-matcha-dark/70 hover:border-matcha-dark/50 hover:text-matcha-dark'
           }`}
         >
@@ -37,7 +37,7 @@ export function StoreFilterGrid({ stores }: { stores: Store[] }) {
             aria-pressed={activeArea === area}
             className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
               activeArea === area
-                ? 'bg-matcha-dark text-cream shadow-sm'
+                ? 'bg-matcha-dark text-cream'
                 : 'border border-matcha-dark/20 text-matcha-dark/70 hover:border-matcha-dark/50 hover:text-matcha-dark'
             }`}
           >

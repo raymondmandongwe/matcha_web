@@ -11,7 +11,7 @@ export function MatchaLeafWatermark() {
         d="M200 20c88 0 160 80 160 180S288 380 200 380 40 300 40 200c0-30 80-180 160-180Z"
       />
       <path
-        stroke="#FFF8FA"
+        stroke="#FFFFFF"
         strokeOpacity="0.5"
         strokeWidth="3"
         fill="none"

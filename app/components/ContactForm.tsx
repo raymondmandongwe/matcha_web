@@ -154,7 +154,7 @@ export function ContactForm() {
       'transition-colors placeholder:text-charcoal/35',
       'focus:ring-2 disabled:opacity-50',
       errors[field]
-        ? 'border-red-400 focus:border-red-500 focus:ring-red-200'
+        ? 'border-gold focus:border-gold focus:ring-red-200'
         : 'border-matcha-dark/15 focus:border-matcha-dark focus:ring-matcha-mid/30',
     ].join(' ');
 
@@ -163,7 +163,7 @@ export function ContactForm() {
   if (status === 'success') {
     return (
       <section aria-labelledby="contact-success-heading" className="bg-cream px-6 py-16 sm:py-24">
-        <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)]">
+        <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-10 text-center shadow-[0_20px_60px_-15px_rgba(168,213,141,0.2)]">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-matcha-mid/20">
             <span aria-hidden="true" className="text-3xl text-matcha-mid">✓</span>
           </div>
@@ -194,7 +194,7 @@ export function ContactForm() {
 
   return (
     <section aria-labelledby="contact-form-heading" className="bg-cream px-6 py-16 sm:py-24">
-      <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(31,51,36,0.2)] sm:p-10">
+      <div className="mx-auto max-w-[600px] rounded-3xl bg-card p-8 shadow-[0_20px_60px_-15px_rgba(168,213,141,0.2)] sm:p-10">
         <h2
           id="contact-form-heading"
           className="font-[family-name:var(--font-display)] text-3xl font-semibold text-matcha-dark"
@@ -207,7 +207,7 @@ export function ContactForm() {
 
         {/* Send error banner */}
         {status === 'error' && sendError && (
-          <div role="alert" className="mt-5 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <div role="alert" className="mt-5 rounded-lg border border-gold/40 bg-gold/10 px-4 py-3 text-sm text-gold">
             {sendError}
           </div>
         )}
@@ -217,7 +217,7 @@ export function ContactForm() {
           {/* Name */}
           <div>
             <label htmlFor="cf-name" className="block text-sm font-medium text-charcoal">
-              Name <span aria-hidden="true" className="text-red-500">*</span>
+              Name <span aria-hidden="true" className="text-gold">*</span>
             </label>
             <input
               id="cf-name"
@@ -235,7 +235,7 @@ export function ContactForm() {
               className={`${fieldCls('name')} mt-1.5`}
             />
             {errors.name && (
-              <p id="cf-name-error" role="alert" className="mt-1.5 text-xs text-red-600">
+              <p id="cf-name-error" role="alert" className="mt-1.5 text-xs text-gold">
                 {errors.name}
               </p>
             )}
@@ -244,7 +244,7 @@ export function ContactForm() {
           {/* Email */}
           <div>
             <label htmlFor="cf-email" className="block text-sm font-medium text-charcoal">
-              Email <span aria-hidden="true" className="text-red-500">*</span>
+              Email <span aria-hidden="true" className="text-gold">*</span>
             </label>
             <input
               id="cf-email"
@@ -262,7 +262,7 @@ export function ContactForm() {
               className={`${fieldCls('email')} mt-1.5`}
             />
             {errors.email && (
-              <p id="cf-email-error" role="alert" className="mt-1.5 text-xs text-red-600">
+              <p id="cf-email-error" role="alert" className="mt-1.5 text-xs text-gold">
                 {errors.email}
               </p>
             )}
@@ -292,13 +292,13 @@ export function ContactForm() {
           <div>
             <div className="flex items-baseline justify-between">
               <label htmlFor="cf-message" className="block text-sm font-medium text-charcoal">
-                Message <span aria-hidden="true" className="text-red-500">*</span>
+                Message <span aria-hidden="true" className="text-gold">*</span>
               </label>
               <span
                 aria-live="polite"
                 className={`text-xs tabular-nums transition-colors ${
                   data.message.length > MESSAGE_MAX
-                    ? 'text-red-500'
+                    ? 'text-gold'
                     : data.message.length > MESSAGE_MAX * 0.85
                     ? 'text-gold'
                     : 'text-charcoal/40'
@@ -322,7 +322,7 @@ export function ContactForm() {
               className={`${fieldCls('message')} mt-1.5 resize-none`}
             />
             {errors.message && (
-              <p id="cf-message-error" role="alert" className="mt-1.5 text-xs text-red-600">
+              <p id="cf-message-error" role="alert" className="mt-1.5 text-xs text-gold">
                 {errors.message}
               </p>
             )}

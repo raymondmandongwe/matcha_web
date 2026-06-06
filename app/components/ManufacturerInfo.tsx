@@ -24,7 +24,7 @@ export function ManufacturerInfo() {
               {manufacturer.name}
             </h3>
             <p className="mt-1 text-sm font-medium uppercase tracking-[0.2em] text-matcha-mid">{manufacturer.location}</p>
-            <p className="mt-3 text-sm leading-relaxed text-[#1A1A1A]/75">{manufacturer.description}</p>
+            <p className="mt-3 text-sm leading-relaxed text-[#A8D58D]/75">{manufacturer.description}</p>
           </div>
         ))}
       </div>

@@ -10,7 +10,7 @@ const EVENTS = [
     time: '10:00 – 12:00',
     location: 'Kloof Street, Cape Town',
     description: 'Learn the traditional Japanese tea ceremony, explore our full product range, and leave with a sample kit.',
-    color: '#7B1D3C',
+    color: '#A8D58D',
   },
   {
     id: 2,
@@ -20,7 +20,7 @@ const EVENTS = [
     time: '09:00 – 15:00',
     location: 'Mojo Market, Sea Point',
     description: 'Find us at Sea Point\'s Mojo Market with exclusive market-only pricing and seasonal matcha drinks.',
-    color: '#C94D6D',
+    color: '#A8D58D',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const EVENTS = [
     time: '07:00 – 09:00',
     location: 'Neelsie, Stellenbosch University',
     description: 'Morning matcha sessions for students and staff. Free tasters for first-timers.',
-    color: '#4A7C59',
+    color: '#FF8ACB',
   },
 ] as const;
 
@@ -67,7 +67,7 @@ export default function EventsPage() {
             <article
               key={event.id}
               aria-label={event.title}
-              className="overflow-hidden rounded-2xl border border-matcha-dark/10 bg-card shadow-sm transition-all hover:shadow-lg hover:-translate-y-0.5"
+              className="overflow-hidden rounded-2xl border border-matcha-dark/10 bg-card transition-all hover:-translate-y-0.5"
             >
               <div className="flex h-28 items-end p-5" style={{ backgroundColor: event.color }}>
                 <span className="rounded-full bg-cream/15 px-2.5 py-1 text-xs font-medium text-cream">

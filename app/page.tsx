@@ -12,7 +12,7 @@ const TRUST_BADGES = [
 ] as const;
 
 const GALLERY_COLORS = [
-  '#7B1D3C', '#C94D6D', '#4A7C59', '#F4A7B9', '#9B2E52', '#4A7C59',
+  '#A8D58D', '#A8D58D', '#FF8ACB', '#A8D58D', '#9B2E52', '#FF8ACB',
 ] as const;
 
 export default function HomePage() {
@@ -54,7 +54,7 @@ export default function HomePage() {
           </div>
 
           <div className="mt-12 w-full max-w-sm shrink-0 lg:mt-0">
-            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-white/40 bg-white/35 shadow-[0_20px_60px_-15px_rgba(45,80,22,0.25)] backdrop-blur-sm">
+            <div className="relative mx-auto aspect-[3/4] w-full max-w-xs overflow-hidden rounded-3xl border border-white/40 bg-white/35 shadow-[0_20px_60px_-15px_rgba(168,213,141,0.25)] backdrop-blur-sm">
               <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 p-6 text-center">
                 <div className="h-20 w-20 rounded-full bg-matcha-mid/15" />
                 <p className="font-[family-name:var(--font-display)] text-xl font-semibold text-matcha-dark">

@@ -56,7 +56,7 @@ export function ReviewsSection() {
           {REVIEWS.map((review) => (
             <blockquote
               key={review.id}
-              className="flex flex-col rounded-2xl bg-card p-7 shadow-sm"
+              className="flex flex-col rounded-2xl bg-card p-7"
             >
               <StarRating rating={review.rating} />
               <p className="mt-4 flex-1 text-base leading-relaxed text-charcoal/80">&ldquo;{review.body}&rdquo;</p>

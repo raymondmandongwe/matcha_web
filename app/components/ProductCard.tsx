@@ -4,7 +4,7 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <article
       aria-label={product.name}
-      className="group flex flex-col overflow-hidden rounded-2xl border border-matcha-dark/10 bg-card shadow-sm transition-all hover:shadow-lg hover:-translate-y-0.5"
+      className="group flex flex-col overflow-hidden rounded-2xl border border-matcha-dark/10 bg-card transition-all hover:-translate-y-0.5"
     >
       <div
         className="relative flex h-52 items-end overflow-hidden p-4"
