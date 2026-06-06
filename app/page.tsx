@@ -8,8 +8,9 @@ const LANDING_LINKS = [
 
 export default function HomePage() {
   return (
-    <main className="flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-10 px-6 py-20 text-center">
-      <div>
+    <main className="relative isolate flex min-h-[calc(100vh-4rem)] flex-col items-center justify-center gap-10 bg-[url('/matcha_web/matcha-home-bg.png')] bg-cover bg-center px-6 py-20 text-center">
+      <div className="absolute inset-0 -z-10 bg-white/25" aria-hidden="true" />
+      <div className="rounded-[8px] bg-white/70 px-6 py-5 shadow-sm backdrop-blur-sm">
         <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold text-[#2D5016] sm:text-5xl">
           Love Matcha
         </h1>
@@ -23,7 +24,7 @@ export default function HomePage() {
           <Link
             key={link.href}
             href={link.href}
-            className="flex flex-col items-start gap-2 rounded-2xl border border-[#2D5016]/10 bg-white p-6 text-left shadow-sm transition-shadow hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FAF6A]"
+            className="flex flex-col items-start gap-2 rounded-[8px] border border-[#2D5016]/10 bg-white/85 p-6 text-left shadow-sm backdrop-blur-sm transition-shadow hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#8FAF6A]"
           >
             <span className="font-[family-name:var(--font-display)] text-lg font-semibold text-[#2D5016]">
               {link.label} →
